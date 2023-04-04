@@ -5,9 +5,9 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://altushost-swe.dl.sourceforge.net/project/nsis/NSIS%20{{ version.split(".")[0] }}/{{ version }}/nsis-{{ version }}.zip  # [win and nsis_variant == 'standard' ]
-    sha256: 1bb9fc85ee5b220d3869325dbb9d191dfe6537070f641c30fbb275c97051fd0c  # [win and nsis_variant == 'standard' ]
-    folder: binary  # [win and nsis_variant == 'standard' ]
+  - url: https://altushost-swe.dl.sourceforge.net/project/nsis/NSIS%20{{ version.split(".")[0] }}/{{ version }}/nsis-{{ version }}.zip
+    sha256: 1bb9fc85ee5b220d3869325dbb9d191dfe6537070f641c30fbb275c97051fd0c
+    folder: binary
   - url: https://altushost-swe.dl.sourceforge.net/project/nsis/NSIS%20{{ version.split(".")[0] }}/{{ version }}/nsis-{{ version }}-log.zip  # [win and nsis_variant == 'log_enabled']
     # Anaconda verified the upstream-supplied SHA-1 and generated the SHA-256
     sha1: 4fcb221a4dc4719580f201f6399b2035073aeaaa  # [win and nsis_variant == 'log_enabled']
