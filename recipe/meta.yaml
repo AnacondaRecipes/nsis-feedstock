@@ -38,6 +38,7 @@ source:
 build:
   number: 0
   skip: True   # [unix]
+  string: h{{ PKG_HASH }}_log_{{ PKG_BUILDNUM }}  # [nsis_variant == 'log_enabled']
 
 requirements:
 
