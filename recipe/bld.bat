@@ -1,7 +1,7 @@
 set "PREFIX_NSIS=%PREFIX%\NSIS"
 
 SET BINARY_DIR="binary"
-if "%NSIS_VARIANT%"=="log_enabled" (
+if %NSIS_VARIANT% == "log_enabled" (
     SET BINARY_DIR="binary_with_logging"
 )
 
