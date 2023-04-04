@@ -36,7 +36,7 @@ source:
     folder: plugins/access-control
 
 build:
-  number: 0
+  number: 1
   skip: True   # [unix]
   string: h{{ PKG_HASH }}_log_{{ PKG_BUILDNUM }}  # [nsis_variant == 'log_enabled']
   track_features:
