@@ -39,6 +39,8 @@ build:
   number: 0
   skip: True   # [unix]
 
+requirements:
+
 test:
   commands:
     - makensis /VERSION  # [win]
@@ -60,7 +62,6 @@ about:
     flexible as possible and is therefore very suitable for internet
     distribution.
   doc_url: https://nsis.sourceforge.io/Docs/
-  doc_source_url: https://nsis.sourceforge.io/Main_Page
   dev_url: https://github.com/NSIS-Dev
 
 extra:
