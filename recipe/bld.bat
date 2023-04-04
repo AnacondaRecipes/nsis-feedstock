@@ -1,14 +1,16 @@
 set "PREFIX_NSIS=%PREFIX%\NSIS"
-
-SET BINARY_DIR="binary"
-if %NSIS_VARIANT% == "log_enabled" (
-    SET BINARY_DIR="binary_with_logging"
-)
-
-cd %BINARY_DIR%
+cd binary
 robocopy . "%PREFIX_NSIS%" /V /S /XD Docs Examples
 if errorlevel 8 exit 1
 cd ..
+
+
+if exist binary_with_logging (
+    cd binary_with_logging
+    robocopy . "%PREFIX_NSIS%" /V /S /XD Docs Examples
+    if errorlevel 8 exit 1
+    cd ..
+)
 
 :: Copy the [de]activate scripts to %PREFIX%\etc\conda\[de]activate.d.
 :: This will allow them to be run on environment activation.
