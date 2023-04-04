@@ -1,0 +1,3 @@
+nsis_variant:
+  - log_enabled
+  - standard
