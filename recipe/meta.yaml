@@ -43,6 +43,7 @@ build:
     - nsis_log_enabled  # [nsis_variant == 'log_enabled']
 
 requirements:
+  build:
 
 test:
   commands:
