@@ -2,6 +2,15 @@ set "PREFIX_NSIS=%PREFIX%\NSIS"
 cd binary
 robocopy . "%PREFIX_NSIS%" /V /S /XD Docs Examples
 if errorlevel 8 exit 1
+cd ..
+
+
+if exist binary_with_logging (
+    cd binary_with_logging
+    robocopy . "%PREFIX_NSIS%" /V /S /XD Docs Examples
+    if errorlevel 8 exit 1
+    cd ..
+)
 
 :: Copy the [de]activate scripts to %PREFIX%\etc\conda\[de]activate.d.
 :: This will allow them to be run on environment activation.
@@ -10,7 +19,6 @@ FOR %%F IN (activate deactivate) DO (
     COPY %RECIPE_DIR%\%%F.bat %PREFIX%\etc\conda\%%F.d\%PKG_NAME%_%%F.bat||exit 1
 )
 
-cd ..
 cd plugins
 copy "elevate\bin.x86-32\elevate.exe" "%PREFIX_NSIS%\Plugins\x86-unicode\"
 if errorlevel 1 exit 1
