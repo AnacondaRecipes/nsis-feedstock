@@ -1,4 +1,4 @@
-{% set version = "3.10" %}
+{% set version = "3.11" %}
 
 package:
   name: nsis
@@ -6,10 +6,10 @@ package:
 
 source:
   - url: https://sourceforge.net/projects/nsis/files/NSIS%20{{ version.split(".")[0] }}/{{ version }}/nsis-{{ version }}.zip
-    sha256: fcdce3229717a2a148e7cda0ab5bdb667f39d8fb33ede1da8dabc336bd5ad110
+    sha256: c7d27f780ddb6cffb4730138cd1591e841f4b7edb155856901cdf5f214394fa1
     folder: binary
   - url: https://sourceforge.net/projects/nsis/files/NSIS%20{{ version.split(".")[0] }}/{{ version }}/nsis-{{ version }}-log.zip  # [nsis_variant == 'log_enabled']
-    sha256: 8e283c2d8543b47270144e81f1458020c10e325a42f538066d802246352bb13e  # [nsis_variant == 'log_enabled']
+    sha256: fe2e643a85c881bc46913394a737bf4fa653d9e42416940c718c603139f877c1  # [nsis_variant == 'log_enabled']
     folder: binary_with_logging  # [nsis_variant == 'log_enabled']
   # Plugins
   - url: https://github.com/conda/nsis-mirror/releases/download/v308/BgWorker-20091001.zip
