@@ -1,3 +1,3 @@
 @if not defined CONDA_PREFIX goto:eof
 
-@set "PATH=%CONDA_PREFIX%\NSIS;%PATH%"
+@set "PATH=%CONDA_PREFIX%\NSIS\Bin;%PATH%"

@@ -1,17 +1,16 @@
 {% set version = "3.11" %}
+{% set ver_major = version.split(".")[0] %}
+{% set ver_minor = version.split(".")[1] %}
 
 package:
   name: nsis
   version: {{ version }}
 
 source:
-  - url: https://sourceforge.net/projects/nsis/files/NSIS%20{{ version.split(".")[0] }}/{{ version }}/nsis-{{ version }}.zip
-    sha256: c7d27f780ddb6cffb4730138cd1591e841f4b7edb155856901cdf5f214394fa1
-    folder: binary
-  - url: https://sourceforge.net/projects/nsis/files/NSIS%20{{ version.split(".")[0] }}/{{ version }}/nsis-{{ version }}-log.zip  # [nsis_variant == 'log_enabled']
-    sha256: fe2e643a85c881bc46913394a737bf4fa653d9e42416940c718c603139f877c1  # [nsis_variant == 'log_enabled']
-    folder: binary_with_logging  # [nsis_variant == 'log_enabled']
-  # Plugins
+  - url: https://sourceforge.net/projects/nsis/files/NSIS%20{{ ver_major }}/{{ version }}/nsis-{{ version }}-src.tar.bz2
+    sha256: 19e72062676ebdc67c11dc032ba80b979cdbffd3886c60b04bb442cdd401ff4b
+    folder: src
+  # Prebuilt third-party plugins (x86 only)
   - url: https://github.com/conda/nsis-mirror/releases/download/v308/BgWorker-20091001.zip
     sha256: be8c5264c796309c465d017b12e12aee62d3c8c20966bbbecb96fb8fabb023ce
     folder: plugins/BgWorker
@@ -40,6 +39,14 @@ build:
 
 requirements:
   build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - python
+    - scons
+  host:
+    - zlib
+  run:
+    - zlib
 
 test:
   commands:
@@ -49,12 +56,10 @@ about:
   home: https://nsis.sourceforge.io/Main_Page
   license: zlib-acknowledgement AND bzip2-1.0.6 AND CPL-1.0 AND LGPL-2.1-or-later
   license_file:
-    - binary/COPYING
+    - src/COPYING
     - plugins/UAC/License.txt
     - plugins/untgz/LICENSE.TXT
     - plugins/UnicodePathTest/Readme.txt
-    # plugins/elevate has unknown license
-    # plugins/BgWorker has unknown license
   license_family: Other
   summary: A professional open source system to create Windows installers
   description: |
