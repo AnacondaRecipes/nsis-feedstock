@@ -3,4 +3,6 @@ upstream_sources:
   - github:
       identifier: NSIS-Dev/nsis
       use_max_tag: true
-      include_regex: ^v3\d{2,3}$
+      include_regex: ^v3\d{2}$
+      from_pattern: ^v3(\d{2})$
+      to_pattern: 3.\1
