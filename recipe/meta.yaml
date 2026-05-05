@@ -1,15 +1,16 @@
-{% set version = "3.11" %}
+{% set name = "nsis" %}
+{% set version = "3.12" %}
 
 package:
-  name: nsis
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  - url: https://sourceforge.net/projects/nsis/files/NSIS%20{{ version.split(".")[0] }}/{{ version }}/nsis-{{ version }}.zip
-    sha256: c7d27f780ddb6cffb4730138cd1591e841f4b7edb155856901cdf5f214394fa1
+  - url: https://sourceforge.net/projects/{{ name }}/files/NSIS%20{{ version.split(".")[0] }}/{{ version }}/{{ name }}-{{ version }}.zip
+    sha256: 56581f90db321581c5381193d796fffcf2d24b2f8fed2160a6c6a3baa67f2c4f
     folder: binary
-  - url: https://sourceforge.net/projects/nsis/files/NSIS%20{{ version.split(".")[0] }}/{{ version }}/nsis-{{ version }}-log.zip  # [nsis_variant == 'log_enabled']
-    sha256: fe2e643a85c881bc46913394a737bf4fa653d9e42416940c718c603139f877c1  # [nsis_variant == 'log_enabled']
+  - url: https://sourceforge.net/projects/{{ name }}/files/NSIS%20{{ version.split(".")[0] }}/{{ version }}/{{ name }}-{{ version }}-log.zip  # [nsis_variant == 'log_enabled']
+    sha256: 2be7cfed1fec5c88104b0ace5adbe968973484d01f8274aa4eb0338f58a46412  # [nsis_variant == 'log_enabled']
     folder: binary_with_logging  # [nsis_variant == 'log_enabled']
   # Plugins
   - url: https://github.com/conda/nsis-mirror/releases/download/v308/BgWorker-20091001.zip
@@ -48,6 +49,7 @@ test:
 about:
   home: https://nsis.sourceforge.io/Main_Page
   license: zlib-acknowledgement AND bzip2-1.0.6 AND CPL-1.0 AND LGPL-2.1-or-later
+  license_family: Other
   license_file:
     - binary/COPYING
     - plugins/UAC/License.txt
@@ -55,13 +57,12 @@ about:
     - plugins/UnicodePathTest/Readme.txt
     # plugins/elevate has unknown license
     # plugins/BgWorker has unknown license
-  license_family: Other
   summary: A professional open source system to create Windows installers
   description: |
     NSIS (Nullsoft Scriptable Install System) is designed to be as small and
     flexible as possible and is therefore very suitable for internet
     distribution.
-  doc_url: https://nsis.sourceforge.io/Docs/
+  doc_url: https://nsis.sourceforge.io/Docs
   dev_url: https://github.com/NSIS-Dev
 
 extra:
