@@ -31,7 +31,7 @@ if /I "%LINK_MACHINE%"=="ARM64" (
 )
 
 cd /d "%SRC_DIR%\plugins\BgWorker"
-cl %CL_COMMON% /LD BgWorker.cpp /link %LINK_COMMON% /OUT:"%PLUGIN_DIR%\BgWorker.dll"
+cl %CL_COMMON% %PLUGINAPI_FI% /LD BgWorker.cpp /link %LINK_COMMON% /OUT:"%PLUGIN_DIR%\BgWorker.dll"
 if errorlevel 1 exit 1
 del /q *.obj 2>nul
 
@@ -45,7 +45,7 @@ if errorlevel 1 exit 1
 del /q *.obj *.res 2>nul
 
 cd /d "%SRC_DIR%\plugins\UAC"
-cl %CL_COMMON% /LD uac.cpp RunAs.cpp util.cpp resource.rc /link %LINK_COMMON% ole32.lib shell32.lib advapi32.lib /OUT:"%PLUGIN_DIR%\UAC.dll"
+cl %CL_COMMON% %PLUGINAPI_FI% /LD uac.cpp RunAs.cpp util.cpp resource.rc /link %LINK_COMMON% ole32.lib shell32.lib advapi32.lib /OUT:"%PLUGIN_DIR%\UAC.dll"
 if errorlevel 1 exit 1
 del /q *.obj 2>nul
 
