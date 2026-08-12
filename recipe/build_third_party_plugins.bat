@@ -43,9 +43,11 @@ if errorlevel 1 exit 1
 del /q *.obj *.res 2>nul
 
 cd /d "%SRC_DIR%\plugins\UAC"
-cl %CL_COMMON% /LD uac.cpp RunAs.cpp util.cpp resource.rc /link /NOLOGO /NODEFAULTLIB /OPT:REF /OPT:ICF,9 /ENTRY:_DllMainCRTStartup /MACHINE:%LINK_MACHINE% kernel32.lib user32.lib ole32.lib shell32.lib advapi32.lib /OUT:"%PLUGIN_DIR%\UAC.dll"
+rc /nologo /d NDEBUG resource.rc
 if errorlevel 1 exit 1
-del /q *.obj 2>nul
+cl %CL_COMMON% /LD uac.cpp RunAs.cpp util.cpp resource.res /link /NOLOGO /NODEFAULTLIB /OPT:REF /OPT:ICF,9 /ENTRY:_DllMainCRTStartup /MACHINE:%LINK_MACHINE% kernel32.lib user32.lib ole32.lib shell32.lib advapi32.lib /OUT:"%PLUGIN_DIR%\UAC.dll"
+if errorlevel 1 exit 1
+del /q *.obj *.res 2>nul
 
 cd /d "%SRC_DIR%\plugins\untgz"
 cl %CL_COMMON% /Gs16000 /DNDEBUG /D_WIN32 /DEXEHEAD /DWIN32 /D_WINDOWS /DNSIS_COMPRESS_USE_ZLIB ^
