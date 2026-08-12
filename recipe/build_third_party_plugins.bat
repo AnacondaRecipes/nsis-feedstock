@@ -31,7 +31,7 @@ if /I "%LINK_MACHINE%"=="ARM64" (
 )
 
 cd /d "%SRC_DIR%\plugins\BgWorker"
-cl %CL_COMMON% %PLUGINAPI_FI% /LD BgWorker.cpp /link %LINK_COMMON% /OUT:"%PLUGIN_DIR%\BgWorker.dll"
+cl %CL_COMMON% /LD BgWorker.cpp /link /NOLOGO /NODEFAULTLIB /OPT:REF /OPT:ICF,9 /ENTRY:_DllMainCRTStartup /MACHINE:%LINK_MACHINE% kernel32.lib user32.lib /OUT:"%PLUGIN_DIR%\BgWorker.dll"
 if errorlevel 1 exit 1
 del /q *.obj 2>nul
 
