@@ -10,7 +10,7 @@ source:
     sha256: f3ed7a8e4aa2cf4e8cf47d3b563a02559e0cb4934db2662b2f9661b824e2b186
     folder: src
     patches:
-      - 0001-Build-Call-amd64.S-with-ml64-on-MSVC.patch
+      - patches/0001-Build-Call-amd64.S-with-ml64-on-MSVC.patch
   # Third-party plugin sources
   - url: https://github.com/conda/nsis-mirror/releases/download/v308/BgWorker-20091001.zip
     sha256: be8c5264c796309c465d017b12e12aee62d3c8c20966bbbecb96fb8fabb023ce
@@ -32,7 +32,7 @@ source:
     folder: plugins/access-control
 
 build:
-  number: 3
+  number: 4
   skip: True   # [not win]
   string: h{{ PKG_HASH }}_log_{{ PKG_BUILDNUM }}  # [nsis_variant == 'log_enabled']
   track_features:
