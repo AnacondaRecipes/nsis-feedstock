@@ -9,9 +9,6 @@ source:
   - url: https://downloads.sourceforge.net/project/{{ name }}/NSIS%203/{{ version }}/{{ name }}-{{ version }}-src.tar.bz2
     sha256: f3ed7a8e4aa2cf4e8cf47d3b563a02559e0cb4934db2662b2f9661b824e2b186
     folder: src
-  - url: https://mirrors.edge.kernel.org/pub/software/network/zlib/zlib-1.3.1.tar.gz
-    sha256: 9a093f68516bd3c1a7abd381377879e40b927212bb629f6aae81016d5853c7d5
-    folder: zlib-src  # [win and not arm64]
   # Third-party plugin sources
   - url: https://github.com/conda/nsis-mirror/releases/download/v308/BgWorker-20091001.zip
     sha256: be8c5264c796309c465d017b12e12aee62d3c8c20966bbbecb96fb8fabb023ce
@@ -33,7 +30,7 @@ source:
     folder: plugins/access-control
 
 build:
-  number: 1
+  number: 2
   skip: True   # [not win]
   string: h{{ PKG_HASH }}_log_{{ PKG_BUILDNUM }}  # [nsis_variant == 'log_enabled']
   track_features:
@@ -49,7 +46,7 @@ requirements:
     - scons
     - 7zip  # [win]
   host:
-    - zlib  # [win and arm64]
+    - zlib  # [win]
 
 test:
   commands:

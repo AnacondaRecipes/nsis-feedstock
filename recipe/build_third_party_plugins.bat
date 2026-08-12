@@ -24,6 +24,8 @@ if not exist "%SRC_DIR%\plugins\elevate\src\elevate.c" (
 
 if /I "%LINK_MACHINE%"=="ARM64" (
     set "ELEVATE_ARCH_DEF=_M_ARM64"
+) else if /I "%LINK_MACHINE%"=="AMD64" (
+    set "ELEVATE_ARCH_DEF=_M_AMD64"
 ) else (
     set "ELEVATE_ARCH_DEF=_M_IX86"
 )

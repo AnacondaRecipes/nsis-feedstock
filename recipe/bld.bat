@@ -8,18 +8,16 @@ if "%ARCH%"=="arm64" (
     set "TARGET_ARCH=arm64"
     set "PLUGIN_SUBDIR=arm64-unicode"
     set "LINK_MACHINE=ARM64"
-    set "ZLIB_DIR=%LIBRARY_PREFIX%"
-    if not exist "%LIBRARY_LIB%\zdll.lib" (
-        copy "%LIBRARY_LIB%\zlib.lib" "%LIBRARY_LIB%\zdll.lib"
-        if errorlevel 1 exit 1
-    )
 ) else (
-    set "TARGET_ARCH=x86"
-    set "PLUGIN_SUBDIR=x86-unicode"
-    set "LINK_MACHINE=X86"
-    call "%RECIPE_DIR%\build_zlib_win32.bat"
+    set "TARGET_ARCH=amd64"
+    set "PLUGIN_SUBDIR=amd64-unicode"
+    set "LINK_MACHINE=AMD64"
+)
+
+set "ZLIB_DIR=%LIBRARY_PREFIX%"
+if not exist "%LIBRARY_LIB%\zdll.lib" (
+    copy "%LIBRARY_LIB%\zlib.lib" "%LIBRARY_LIB%\zdll.lib"
     if errorlevel 1 exit 1
-    set "ZLIB_DIR=%SRC_DIR%\zlib-src"
 )
 
 if "%nsis_variant%"=="log_enabled" (
