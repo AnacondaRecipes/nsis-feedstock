@@ -53,8 +53,8 @@ requirements:
 
 test:
   commands:
-    - if not exist "%PREFIX%\NSIS\Bin\makensis.exe" exit 1
-    - "%PREFIX%\NSIS\Bin\makensis.exe" /VERSION
+    - if not exist %PREFIX%\\NSIS\\Bin\\makensis.exe exit 1
+    - '%PREFIX%\\NSIS\\Bin\\makensis.exe /VERSION'
 
 about:
   home: https://nsis.sourceforge.io/Main_Page
