@@ -1,24 +1,22 @@
 {% set name = "nsis" %}
 {% set version = "3.12" %}
-{% set ver_major = version.split(".")[0] %}
-{% set ver_minor = version.split(".")[1] %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  - url: https://sourceforge.net/projects/{{ name }}/files/NSIS%20{{ ver_major }}/{{ version }}/{{ name }}-{{ version }}-src.tar.bz2
+  - url: https://downloads.sourceforge.net/project/{{ name }}/NSIS%203/{{ version }}/{{ name }}-{{ version }}-src.tar.bz2
     sha256: f3ed7a8e4aa2cf4e8cf47d3b563a02559e0cb4934db2662b2f9661b824e2b186
     folder: src
-  - url: https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.gz
+  - url: https://mirrors.edge.kernel.org/pub/software/network/zlib/zlib-1.3.1.tar.gz
     sha256: 9a093f68516bd3c1a7abd381377879e40b927212bb629f6aae81016d5853c7d5
     folder: zlib-src  # [win and not arm64]
   # Third-party plugin sources
   - url: https://github.com/conda/nsis-mirror/releases/download/v308/BgWorker-20091001.zip
     sha256: be8c5264c796309c465d017b12e12aee62d3c8c20966bbbecb96fb8fabb023ce
     folder: plugins/BgWorker
-  - url: http://code.kliu.org/misc/elevate/elevate-1.3.0-redist.7z
+  - url: https://github.com/conda/nsis-mirror/releases/download/v308/elevate-1.3.0-redist.7z
     sha256: b1b3f070353a0eadee2cea3a575049d10df9763ff24e39313da4cec9455382e1
     folder: plugins/elevate
   - url: https://github.com/conda/nsis-mirror/releases/download/v308/UAC-0.2.4c-20150526.zip
@@ -45,6 +43,8 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - {{ stdlib('c') }}
+    - git
     - python
     - scons
     - 7zip  # [win]
@@ -53,8 +53,8 @@ requirements:
 
 test:
   commands:
-    - if not exist %PREFIX%\\NSIS\\Bin\\makensis.exe exit 1
-    - '%PREFIX%\\NSIS\\Bin\\makensis.exe /VERSION'
+    - if not exist %PREFIX%\\NSIS\\Bin\\makensis.exe exit 1  # [win]
+    - '%PREFIX%\\NSIS\\Bin\\makensis.exe /VERSION'  # [win]
 
 about:
   home: https://nsis.sourceforge.io/Main_Page
@@ -73,7 +73,7 @@ about:
     flexible as possible and is therefore very suitable for internet
     distribution.
   doc_url: https://nsis.sourceforge.io/Docs
-  dev_url: https://github.com/NSIS-Dev
+  dev_url: https://sourceforge.net/projects/nsis/
 
 extra:
   recipe-maintainers:
