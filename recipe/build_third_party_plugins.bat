@@ -38,7 +38,7 @@ del /q *.obj 2>nul
 cd /d "%SRC_DIR%\plugins\elevate\src"
 rc /nologo /d NDEBUG /d "%ELEVATE_ARCH_DEF%" elevate.rc
 if errorlevel 1 exit 1
-cl /nologo /O1 /GS- /MT /DUNICODE /D_UNICODE /D_WIN32_WINNT=0x0600 elevate.c elevate.res /link /NOLOGO /RELEASE /OPT:REF /OPT:ICF /SUBSYSTEM:CONSOLE,6.0 /MACHINE:%LINK_MACHINE% kernel32.lib shell32.lib /OUT:"%PLUGIN_DIR%\elevate.exe"
+cl /nologo /O1 /GS- /MT /DUNICODE /D_UNICODE /D_WIN32_WINNT=0x0600 elevate.c elevate.res /link /NOLOGO /RELEASE /OPT:REF /OPT:ICF /SUBSYSTEM:CONSOLE,6.0 /MACHINE:%LINK_MACHINE% kernel32.lib shell32.lib libcmt.lib libucrt.lib libvcruntime.lib /OUT:"%PLUGIN_DIR%\elevate.exe"
 if errorlevel 1 exit 1
 del /q *.obj *.res 2>nul
 
