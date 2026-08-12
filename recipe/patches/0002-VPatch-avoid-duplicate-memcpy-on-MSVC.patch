@@ -1,0 +1,15 @@
+--- a/Contrib/VPatch/Source/Plugin/md5.c
++++ b/Contrib/VPatch/Source/Plugin/md5.c
+@@ -60,12 +60,6 @@
+ #define MD5_SIZE_T unsigned int
+ #endif 
+ 
+-#if _MSC_VER-0 >= 1930
+-/* Work around "error LNK2019: unresolved external symbol _memcpy referenced in function _md5_memcpy" in VS2022 */
+-void* memcpy(void *dest, const void *src, MD5_SIZE_T count);
+-#pragma function(memcpy)
+-#define md5_memcpy memcpy
+-#endif
+ void* md5_memcpy(void *dest, const void *src, MD5_SIZE_T count) {
+   md5_byte_t* bDest = (md5_byte_t*)dest;
+   md5_byte_t* bSrc = (md5_byte_t*)src;
