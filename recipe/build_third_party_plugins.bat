@@ -75,10 +75,12 @@ if errorlevel 1 exit 1
 del /q *.obj 2>nul
 
 cd /d "%SRC_DIR%\plugins\access-control"
+rc /nologo /d NDEBUG Contrib\AccessControl\AccessControl.rc
+if errorlevel 1 exit 1
 cl /nologo /O1 /GS- /MT /c "%NSIS_SRC%\SCons\Config\memset.c" /Fo:AccessControl_memset.obj
 if errorlevel 1 exit 1
-cl %CL_COMMON% %PLUGINAPI_FI% /LD Contrib\AccessControl\AccessControl.cpp Contrib\AccessControl\AccessControl.rc AccessControl_memset.obj /link %LINK_COMMON% /OUT:"%PLUGIN_DIR%\AccessControl.dll"
+cl %CL_COMMON% %PLUGINAPI_FI% /LD Contrib\AccessControl\AccessControl.cpp Contrib\AccessControl\AccessControl.res AccessControl_memset.obj /link %LINK_COMMON% /OUT:"%PLUGIN_DIR%\AccessControl.dll"
 if errorlevel 1 exit 1
-del /q *.obj 2>nul
+del /q *.obj *.res 2>nul
 
 exit 0
