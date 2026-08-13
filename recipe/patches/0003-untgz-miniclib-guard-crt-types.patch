@@ -1,14 +1,17 @@
 diff --git a/miniclib.c b/miniclib.c
-index 910b1af..21bad0e 100755
+index 910b1af..8998736 100755
 --- a/miniclib.c
 +++ b/miniclib.c
-@@ -2,9 +2,11 @@
+@@ -2,9 +2,14 @@
   * KJD <jeremyd@computer.org>
   */
  
 -#include "miniclib.h"
 -
 +#if defined(_MSC_VER) && (_MSC_VER >= 1800)
++#ifndef ESUCCESS
++#define ESUCCESS 0
++#endif
  int errno = ESUCCESS;
 +#define MINICLIB_ERRNO_DEFINED
 +#endif
