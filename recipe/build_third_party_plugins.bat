@@ -54,13 +54,15 @@ if errorlevel 1 exit 1
 del /q *.obj *.res 2>nul
 
 cd /d "%SRC_DIR%\plugins\untgz"
+rc /nologo /d NDEBUG untgz.rc
+if errorlevel 1 exit 1
 cl %UNTGL_CL% /Gs16000 /DNDEBUG /D_WIN32 /DEXEHEAD /DWIN32 /D_WINDOWS /DNSIS_COMPRESS_USE_ZLIB ^
     /I. /Izlib /Ilzma /Ib2 ^
     /LD untgz.cpp filetype.cpp nsisUtils.c miniclib.c untar.c ^
     zlib\adler32.c zlib\crc32.c zlib\gzio.c zlib\inffast.c zlib\inflate.c zlib\inftrees.c zlib\zutil.c ^
     lzma\lzma.c lzma\LzmaDecode.c ^
     bz2\blocksort.c bz2\bzlib.c bz2\crctable.c bz2\decompress.c bz2\huffman.c bz2\randtable.c ^
-    untgz.rc ^
+    untgz.res ^
     /link %UNTGL_LINK% /OUT:"%PLUGIN_DIR%\untgz.dll"
 if errorlevel 1 exit 1
 del /q *.obj 2>nul

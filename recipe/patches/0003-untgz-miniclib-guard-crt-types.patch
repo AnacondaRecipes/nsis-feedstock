@@ -1,0 +1,35 @@
+diff --git a/a/miniclib.h b/miniclib.h.new
+old mode 100755
+new mode 100644
+index 31552c5..c0cf3c2
+--- a/miniclib.h
++++ b/miniclib.h.new
+@@ -20,7 +20,10 @@ typedef unsigned short wchar_t;
+ void mCRTinit(void);
+ 
+ typedef unsigned long time_t;
++#ifndef _SIZE_T_DEFINED
+ typedef unsigned size_t;
++#define _SIZE_T_DEFINED
++#endif
+ 
+ extern int errno;
+ 
+@@ -170,14 +173,16 @@ FILE *_fdopen(int handle, const char *mode);
+ #define WIN32_LEAN_AND_MEAN
+ #define _INC_STRING		/* don't allow windows.h to include MS clib's string.h */
+ #define _INC_MEMORY
+-#define _INC_EXCPT      /* don't allow VC8+SDK2003R2 to include MS clib */
+ #if (_MSC_VER >= 1500)
++#ifndef _INC_EXCPT
+ typedef enum _EXCEPTION_DISPOSITION {
+     ExceptionContinueExecution,
+     ExceptionContinueSearch,
+     ExceptionNestedException,
+     ExceptionCollidedUnwind
+ } EXCEPTION_DISPOSITION;
++#define _INC_EXCPT      /* don't allow VC8+SDK2003R2 to include MS clib */
++#endif
+ #endif
+ #define _INC_CTYPE
+ #define __STRALIGN_H_

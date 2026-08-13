@@ -25,6 +25,8 @@ source:
   - git_url: https://github.com/mingwandroid/nsis-untgz.git
     git_rev: 5c814c5f2c8a9a14e3a6ddd3e594fcc76db5b86a
     folder: plugins/untgz
+    patches:
+      - patches/0003-untgz-miniclib-guard-crt-types.patch
   - git_url: https://github.com/mingwandroid/nsis-UnicodePathTest.git
     git_rev: fa74caef553883f1820049d89e169aff57551796
     folder: plugins/UnicodePathTest
