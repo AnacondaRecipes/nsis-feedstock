@@ -68,12 +68,16 @@ if errorlevel 1 exit 1
 del /q *.obj 2>nul
 
 cd /d "%SRC_DIR%\plugins\UnicodePathTest\Source"
-cl %CL_COMMON% %PLUGINAPI_FI% /LD UnicodePathTest.c /link %LINK_COMMON% /OUT:"%PLUGIN_DIR%\UnicodePathTest.dll"
+cl /nologo /O1 /GS- /MT /c "%NSIS_SRC%\SCons\Config\memset.c"
+if errorlevel 1 exit 1
+cl %CL_COMMON% %PLUGINAPI_FI% /LD UnicodePathTest.c memset.obj /link %LINK_COMMON% /OUT:"%PLUGIN_DIR%\UnicodePathTest.dll"
 if errorlevel 1 exit 1
 del /q *.obj 2>nul
 
 cd /d "%SRC_DIR%\plugins\access-control"
-cl %CL_COMMON% %PLUGINAPI_FI% /LD Contrib\AccessControl\AccessControl.cpp Contrib\AccessControl\AccessControl.rc /link %LINK_COMMON% /OUT:"%PLUGIN_DIR%\AccessControl.dll"
+cl /nologo /O1 /GS- /MT /c "%NSIS_SRC%\SCons\Config\memset.c" /Fo:AccessControl_memset.obj
+if errorlevel 1 exit 1
+cl %CL_COMMON% %PLUGINAPI_FI% /LD Contrib\AccessControl\AccessControl.cpp Contrib\AccessControl\AccessControl.rc AccessControl_memset.obj /link %LINK_COMMON% /OUT:"%PLUGIN_DIR%\AccessControl.dll"
 if errorlevel 1 exit 1
 del /q *.obj 2>nul
 
