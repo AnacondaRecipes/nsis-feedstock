@@ -20,7 +20,7 @@ index 910b1af..8998736 100755
  FILE *stdin=NULL, *stdout=NULL, *stderr=NULL;
  
 diff --git a/miniclib.h b/miniclib.h
-index 19e51d1..90367f0 100755
+index 19e51d1..2890489 100755
 --- a/miniclib.h
 +++ b/miniclib.h
 @@ -19,10 +19,17 @@ typedef unsigned short wchar_t;
@@ -52,7 +52,7 @@ index 19e51d1..90367f0 100755
  typedef enum _EXCEPTION_DISPOSITION {
      ExceptionContinueExecution,
      ExceptionContinueSearch,
-@@ -179,6 +186,12 @@ typedef enum _EXCEPTION_DISPOSITION {
+@@ -179,8 +186,17 @@ typedef enum _EXCEPTION_DISPOSITION {
      ExceptionCollidedUnwind
  } EXCEPTION_DISPOSITION;
  #endif
@@ -65,6 +65,11 @@ index 19e51d1..90367f0 100755
  #define _INC_CTYPE
  #define __STRALIGN_H_
  #include <windows.h>
++#if defined(_MSC_VER) && (_MSC_VER >= 1800)
++#undef errno
++#endif
+ 
+ #endif /* _MINI_CRT_LIB_ */
 diff --git a/untar.c b/untar.c
 index f79ef2f..8f9d20d 100644
 --- a/untar.c
