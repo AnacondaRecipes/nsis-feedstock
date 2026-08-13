@@ -1,0 +1,37 @@
+--- a/Contrib/System/SConscript
++++ b/Contrib/System/SConscript
+@@ -32,8 +32,8 @@
+ srcsuff = ''
+ if env['TARGET_ARCH'] != 'x86':
+ 	srcsuff = '-' + env['TARGET_ARCH']
+-	defs += ['SYSTEM_NOCALLBACKS'] # BUGBUG: Remove this when CallBack() is implemented
+ filename = 'Call' + srcsuff
++has_call_asm = False
+ 
+ src_ascpp = """
+ 	#if 0 /* a C style comment */
+@@ -45,13 +45,22 @@
+ conf = env.Configure()
+ if conf.TryCompile('END', '.S'):
+ 	files += ['Source/'+filename+'.S']
++	has_call_asm = True
+ elif (not msvc) and conf.TryCompile(src_ascpp, '.S'):
+ 	files += ['Source/'+filename+'CPP.S']
++	has_call_asm = True
+ elif (not msvc) and conf.TryCompile(src_ascpp, '.sx'):
+ 	files += ['Source/'+filename+'CPP.sx']
+-else:
+-	print('WARNING: System.dll: unable to find assembler for '+filename+'.S')
++	has_call_asm = True
++elif msvc and env['TARGET_ARCH'] == 'amd64':
++	asm_obj = filename + '.obj'
++	env.Command(asm_obj, 'Source/' + filename + '.S', 'ml64 /nologo /c /Fo$TARGET $SOURCE')
++	files += [asm_obj]
++	has_call_asm = True
+ conf.Finish()
++if env['TARGET_ARCH'] != 'x86' and not has_call_asm:
++	print('WARNING: System.dll: unable to find assembler for '+filename+'.S')
++	defs += ['SYSTEM_NOCALLBACKS'] # BUGBUG: Remove this when CallBack() is implemented
+ 
+ BuildPlugin(
+ 	target,

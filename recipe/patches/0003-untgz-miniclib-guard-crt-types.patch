@@ -1,0 +1,91 @@
+diff --git a/miniclib.c b/miniclib.c
+index 910b1af..7e56f27 100755
+--- a/miniclib.c
++++ b/miniclib.c
+@@ -2,9 +2,18 @@
+  * KJD <jeremyd@computer.org>
+  */
+ 
++#if defined(_MSC_VER) && (_MSC_VER >= 1800)
++#ifndef ESUCCESS
++#define ESUCCESS 0
++#endif
++int errno = ESUCCESS;
++#define MINICLIB_ERRNO_DEFINED
++#endif
+ #include "miniclib.h"
+ 
++#if !defined(_MSC_VER) || (_MSC_VER < 1800)
+ int errno = ESUCCESS;
++#endif
+ 
+ FILE *stdin=NULL, *stdout=NULL, *stderr=NULL;
+ 
+diff --git a/miniclib.h b/miniclib.h
+index 19e51d1..0ee09f2 100755
+--- a/miniclib.h
++++ b/miniclib.h
+@@ -19,10 +19,17 @@ typedef unsigned short wchar_t;
+ /* you must call this before using any other function!!! */
+ void mCRTinit(void);
+ 
++#if defined(_MSC_VER) && (_MSC_VER >= 1800)
++#include <stddef.h>
++#include <time.h>
++#else
+ typedef unsigned long time_t;
+ typedef unsigned size_t;
++#endif
+ 
++#ifndef MINICLIB_ERRNO_DEFINED
+ extern int errno;
++#endif
+ 
+ #ifndef NULL
+ #ifdef  __cplusplus
+@@ -170,8 +177,8 @@ FILE *_fdopen(int handle, const char *mode);
+ #define WIN32_LEAN_AND_MEAN
+ #define _INC_STRING		/* don't allow windows.h to include MS clib's string.h */
+ #define _INC_MEMORY
+-#define _INC_EXCPT      /* don't allow VC8+SDK2003R2 to include MS clib */
+-#if (_MSC_VER >= 1500)
++#if defined(_MSC_VER) && (_MSC_VER >= 1500) && (_MSC_VER < 1800)
++#if !defined(_EXCEPTION_DISPOSITION)
+ typedef enum _EXCEPTION_DISPOSITION {
+     ExceptionContinueExecution,
+     ExceptionContinueSearch,
+@@ -179,8 +186,20 @@ typedef enum _EXCEPTION_DISPOSITION {
+     ExceptionCollidedUnwind
+ } EXCEPTION_DISPOSITION;
+ #endif
++#ifndef _INC_EXCPT
++#define _INC_EXCPT      /* don't allow VC8+SDK2003R2 to include MS clib */
++#endif
++#elif defined(_MSC_VER) && (_MSC_VER < 1500)
++#define _INC_EXCPT      /* don't allow VC8+SDK2003R2 to include MS clib */
++#endif
+ #define _INC_CTYPE
+ #define __STRALIGN_H_
+ #include <windows.h>
++#if defined(_MSC_VER) && (_MSC_VER >= 1800)
++#undef errno
++#ifndef MINICLIB_ERRNO_DEFINED
++extern int errno;
++#endif
++#endif
+ 
+ #endif /* _MINI_CRT_LIB_ */
+diff --git a/untar.c b/untar.c
+index f79ef2f..8f9d20d 100644
+--- a/untar.c
++++ b/untar.c
+@@ -355,7 +355,9 @@ int matchname (TCHAR *fname, int cnt, TCHAR *list[], int junkPaths)
+ }
+ 
+ 
++#if !defined(_MSC_VER) || (_MSC_VER < 1800)
+ typedef unsigned long time_t;
++#endif
+ 
+ #ifdef __GNUC__
+ #define HUNDREDSECINTERVAL 116444772000000000LL
