@@ -10,6 +10,8 @@ set "PLUGINAPI_FI=/FI%API_INC%\pluginapi.c"
 set "INCLUDES=/I"%API_INC%" /I"%API_HDR%""
 set "CL_COMMON=/nologo /O1 /GS- /W3 /MT /EHsc /DUNICODE /D_UNICODE /DNSISCALL=__stdcall %INCLUDES%"
 set "LINK_COMMON=/NOLOGO /NODEFAULTLIB /OPT:REF /OPT:ICF,9 /ENTRY:DllMain /MACHINE:%LINK_MACHINE% kernel32.lib user32.lib advapi32.lib"
+set "UNTGL_CL=/nologo /O1 /GS- /W3 /MT /EHs-c- /DUNICODE /D_UNICODE"
+set "UNTGL_LINK=/NOLOGO /NODEFAULTLIB /OPT:REF /OPT:ICF,9 /ENTRY:_DllMainCRTStartup /MACHINE:%LINK_MACHINE% kernel32.lib user32.lib"
 
 if not exist "%SRC_DIR%\plugins\elevate\src\elevate.c" (
     if exist "%SRC_DIR%\plugins\elevate\elevate-1.3.0-redist.7z" (
@@ -52,14 +54,14 @@ if errorlevel 1 exit 1
 del /q *.obj *.res 2>nul
 
 cd /d "%SRC_DIR%\plugins\untgz"
-cl %CL_COMMON% /Gs16000 /DNDEBUG /D_WIN32 /DEXEHEAD /DWIN32 /D_WINDOWS /DNSIS_COMPRESS_USE_ZLIB ^
+cl %UNTGL_CL% /Gs16000 /DNDEBUG /D_WIN32 /DEXEHEAD /DWIN32 /D_WINDOWS /DNSIS_COMPRESS_USE_ZLIB ^
     /I. /Izlib /Ilzma /Ib2 ^
     /LD untgz.cpp filetype.cpp nsisUtils.c miniclib.c untar.c ^
     zlib\adler32.c zlib\crc32.c zlib\gzio.c zlib\inffast.c zlib\inflate.c zlib\inftrees.c zlib\zutil.c ^
     lzma\lzma.c lzma\LzmaDecode.c ^
     bz2\blocksort.c bz2\bzlib.c bz2\crctable.c bz2\decompress.c bz2\huffman.c bz2\randtable.c ^
     untgz.rc ^
-    /link %LINK_COMMON% /OUT:"%PLUGIN_DIR%\untgz.dll"
+    /link %UNTGL_LINK% /OUT:"%PLUGIN_DIR%\untgz.dll"
 if errorlevel 1 exit 1
 del /q *.obj 2>nul
 
