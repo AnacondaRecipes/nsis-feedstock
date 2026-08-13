@@ -1,9 +1,7 @@
-diff --git a/a/miniclib.h b/miniclib.h.new
-old mode 100755
-new mode 100644
-index 31552c5..c0cf3c2
+diff --git a/miniclib.h b/miniclib.h
+index 19e51d1..e258c78 100755
 --- a/miniclib.h
-+++ b/miniclib.h.new
++++ b/miniclib.h
 @@ -20,7 +20,10 @@ typedef unsigned short wchar_t;
  void mCRTinit(void);
  
