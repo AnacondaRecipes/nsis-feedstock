@@ -13,7 +13,7 @@ index 910b1af..7cd928c 100755
  FILE *stdin=NULL, *stdout=NULL, *stderr=NULL;
  
 diff --git a/miniclib.h b/miniclib.h
-index 19e51d1..7ad0190 100755
+index 19e51d1..b9e657b 100755
 --- a/miniclib.h
 +++ b/miniclib.h
 @@ -19,10 +19,16 @@ typedef unsigned short wchar_t;
@@ -38,19 +38,36 @@ index 19e51d1..7ad0190 100755
  #define _INC_STRING		/* don't allow windows.h to include MS clib's string.h */
  #define _INC_MEMORY
 -#define _INC_EXCPT      /* don't allow VC8+SDK2003R2 to include MS clib */
- #if (_MSC_VER >= 1500)
+-#if (_MSC_VER >= 1500)
++#if defined(_MSC_VER) && (_MSC_VER >= 1500) && (_MSC_VER < 1800)
 +#if !defined(_EXCEPTION_DISPOSITION)
  typedef enum _EXCEPTION_DISPOSITION {
      ExceptionContinueExecution,
      ExceptionContinueSearch,
-@@ -179,6 +185,10 @@ typedef enum _EXCEPTION_DISPOSITION {
+@@ -179,6 +185,12 @@ typedef enum _EXCEPTION_DISPOSITION {
      ExceptionCollidedUnwind
  } EXCEPTION_DISPOSITION;
  #endif
 +#ifndef _INC_EXCPT
 +#define _INC_EXCPT      /* don't allow VC8+SDK2003R2 to include MS clib */
 +#endif
++#elif defined(_MSC_VER) && (_MSC_VER < 1500)
++#define _INC_EXCPT      /* don't allow VC8+SDK2003R2 to include MS clib */
 +#endif
  #define _INC_CTYPE
  #define __STRALIGN_H_
  #include <windows.h>
+diff --git a/untar.c b/untar.c
+index f79ef2f..8f9d20d 100644
+--- a/untar.c
++++ b/untar.c
+@@ -355,7 +355,9 @@ int matchname (TCHAR *fname, int cnt, TCHAR *list[], int junkPaths)
+ }
+ 
+ 
++#if !defined(_MSC_VER) || (_MSC_VER < 1800)
+ typedef unsigned long time_t;
++#endif
+ 
+ #ifdef __GNUC__
+ #define HUNDREDSECINTERVAL 116444772000000000LL
