@@ -1,26 +1,28 @@
 diff --git a/miniclib.c b/miniclib.c
-index 910b1af..8998736 100755
+index 910b1af..7e56f27 100755
 --- a/miniclib.c
 +++ b/miniclib.c
-@@ -2,9 +2,14 @@
+@@ -2,9 +2,18 @@
   * KJD <jeremyd@computer.org>
   */
  
--#include "miniclib.h"
--
 +#if defined(_MSC_VER) && (_MSC_VER >= 1800)
 +#ifndef ESUCCESS
 +#define ESUCCESS 0
 +#endif
- int errno = ESUCCESS;
++int errno = ESUCCESS;
 +#define MINICLIB_ERRNO_DEFINED
 +#endif
-+#include "miniclib.h"
+ #include "miniclib.h"
+ 
++#if !defined(_MSC_VER) || (_MSC_VER < 1800)
+ int errno = ESUCCESS;
++#endif
  
  FILE *stdin=NULL, *stdout=NULL, *stderr=NULL;
  
 diff --git a/miniclib.h b/miniclib.h
-index 19e51d1..2890489 100755
+index 19e51d1..0ee09f2 100755
 --- a/miniclib.h
 +++ b/miniclib.h
 @@ -19,10 +19,17 @@ typedef unsigned short wchar_t;
@@ -52,7 +54,7 @@ index 19e51d1..2890489 100755
  typedef enum _EXCEPTION_DISPOSITION {
      ExceptionContinueExecution,
      ExceptionContinueSearch,
-@@ -179,8 +186,17 @@ typedef enum _EXCEPTION_DISPOSITION {
+@@ -179,8 +186,20 @@ typedef enum _EXCEPTION_DISPOSITION {
      ExceptionCollidedUnwind
  } EXCEPTION_DISPOSITION;
  #endif
@@ -67,6 +69,9 @@ index 19e51d1..2890489 100755
  #include <windows.h>
 +#if defined(_MSC_VER) && (_MSC_VER >= 1800)
 +#undef errno
++#ifndef MINICLIB_ERRNO_DEFINED
++extern int errno;
++#endif
 +#endif
  
  #endif /* _MINI_CRT_LIB_ */
